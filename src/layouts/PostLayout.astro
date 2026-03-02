@@ -1,12 +1,13 @@
 ---
 import Layout from './Layout.astro';
+import { siteConfig } from '../site.config';
 
 const { frontmatter = {} } = Astro.props as { frontmatter?: Record<string, any> };
 const {
   title = 'Untitled post',
   description,
   pubDate,
-  author = 'Lenora Porter',
+  author = siteConfig.author.name,
   readingTime,
 } = frontmatter;
 

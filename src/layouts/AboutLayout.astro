@@ -1,0 +1,101 @@
+---
+import Layout from './Layout.astro';
+import { siteConfig } from '../site.config';
+
+const { frontmatter = {} } = Astro.props as { frontmatter?: Record<string, any> };
+const {
+  title = `About ${siteConfig.author.name}`,
+  greeting = `Hi, I'm ${siteConfig.author.name.split(' ')[0]}.`,
+  lede,
+} = frontmatter;
+---
+
+<Layout title={title}>
+  <section class="about">
+    <header class="about-header">
+      <p class="eyebrow">About</p>
+      <h1>{greeting}</h1>
+      {lede && <p class="lede">{lede}</p>}
+    </header>
+
+    <div class="about-body">
+      <slot />
+    </div>
+  </section>
+
+  <style>
+    .about {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .about-header {
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 40rem;
+      line-height: 1.6;
+    }
+
+    .about-body {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    .about-body :global(h2) {
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .about-body :global(h2:first-child) {
+      margin-top: 0;
+    }
+
+    .about-body :global(p) {
+      margin: 0 0 0.75rem;
+    }
+
+    .about-body :global(p:last-child) {
+      margin-bottom: 0;
+    }
+
+    .about-body :global(ul) {
+      margin: 0 0 1rem;
+      padding-left: 1.1rem;
+    }
+
+    .about-body :global(li + li) {
+      margin-top: 0.4rem;
+    }
+
+    .about-body :global(a) {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.16em;
+    }
+  </style>
+</Layout>

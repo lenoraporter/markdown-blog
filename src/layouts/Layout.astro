@@ -1,6 +1,9 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-const { title = 'My Markdown Blog' } = Astro.props;
+import { siteConfig } from '../site.config';
+
+const { title = siteConfig.title } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <html lang="en">
@@ -365,12 +368,12 @@ const { title = 'My Markdown Blog' } = Astro.props;
           <a href="/markdown-blog/" class="home-link">
             <div class="brand">
               <div class="logo-dot" />
-              <div class="brand-title">Markdown Blog</div>
+              <div class="brand-title">{siteConfig.name}</div>
             </div>
           </a>
           <nav>
-            <a href="/markdown-blog/" class="nav-link">Blog</a>
-            <a href="/markdown-blog/about/" class="nav-link">About</a>
+            <a href="/markdown-blog/" class="nav-link">{siteConfig.nav.blogLabel}</a>
+            <a href="/markdown-blog/about/" class="nav-link">{siteConfig.nav.aboutLabel}</a>
           </nav>
         </div>
         <button
@@ -387,10 +390,10 @@ const { title = 'My Markdown Blog' } = Astro.props;
         <slot />
       </main>
       <footer>
-        <p class="footer-copy">&copy; 2026 Lenora Porter</p>
+        <p class="footer-copy">&copy; {currentYear} {siteConfig.footer.copyright}</p>
         <div class="footer-nav">
-          <a href="/markdown-blog/">Blog</a>
-          <a href="/markdown-blog/about/">About</a>
+          <a href="/markdown-blog/">{siteConfig.nav.blogLabel}</a>
+          <a href="/markdown-blog/about/">{siteConfig.nav.aboutLabel}</a>
         </div>
       </footer>
     </div>

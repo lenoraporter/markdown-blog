@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../site.config';
 
 const postImportResult = import.meta.glob('./posts/*.md', { eager: true });
 
@@ -21,7 +22,7 @@ const posts = Object.values(postImportResult as Record<string, PostModule>)
     pubDate: post.frontmatter.pubDate
       ? new Date(post.frontmatter.pubDate)
       : null,
-    author: post.frontmatter.author ?? 'Lenora Porter',
+    author: post.frontmatter.author ?? siteConfig.author.name,
     readingTime: post.frontmatter.readingTime ?? null,
     url: post.url,
   }))
@@ -31,16 +32,13 @@ const posts = Object.values(postImportResult as Record<string, PostModule>)
   });
 ---
 
-<Layout title="My Markdown Blog">
+<Layout title={siteConfig.title}>
   <section class="hero">
     <p class="hero-eyebrow">Welcome to</p>
     <h1 class="hero-title">
-      <span class="hero-gradient">Markdown Blog</span>
+      <span class="hero-gradient">{siteConfig.name}</span>
     </h1>
-    <p class="hero-lead">
-      A simple blog where every post is just a Markdown file committed to
-      GitHub. No CMS, no database — just words.
-    </p>
+    <p class="hero-lead">{siteConfig.tagline}</p>
   </section>
 
   {posts.length === 0 ? (
