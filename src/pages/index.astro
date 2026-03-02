@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 
 const postImportResult = import.meta.glob('./posts/*.md', { eager: true });
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 type PostModule = {
   frontmatter: {
@@ -44,7 +45,7 @@ const posts = Object.values(postImportResult as Record<string, PostModule>)
       <ul class="post-list">
         {posts.map((post) => (
           <li>
-            <a href={post.url}>
+            <a href={`${base}${post.url}`}>
               <h2>{post.title}</h2>
             </a>
             {post.pubDate && (

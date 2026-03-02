@@ -1,7 +1,9 @@
 import { defineConfig } from 'astro/config';
 
-// Basic Astro config. You can optionally set `site` later to your public URL.
+// Astro config for GitHub Pages project site
 export default defineConfig({
-  // site: 'https://<your-username>.github.io/<your-repo>',
+  site: 'https://lenoraporter.github.io/markdown-blog',
+  base: '/markdown-blog',
 });
+
 
