@@ -13,237 +13,143 @@ const currentYear = new Date().getFullYear();
     <title>{title}</title>
     <ViewTransitions />
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-
       :root {
-        color-scheme: light dark;
+        --font-serif: Georgia, 'Times New Roman', Times, serif;
+        --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        --max-width: 680px;
+        --header-width: 980px;
+        --transition: 150ms ease;
 
-        /* Core tokens */
-        --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
-          'Segoe UI', sans-serif;
-        --radius-lg: 16px;
-        --radius-md: 999px;
-        --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.1);
-        --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-
-        /* Light theme */
-        --bg-page: radial-gradient(
-          ellipse at top left,
-          #eef2ff 0%,
-          #f9fafb 40%,
-          #ffffff 100%
-        );
-        --bg-surface: #ffffff;
-        --bg-elevated: #ffffff;
-        --bg-soft: #f3f4ff;
-        --text-main: #0f172a;
-        --text-muted: #6b7280;
-        --border-subtle: rgba(148, 163, 184, 0.3);
-        --accent: #2563eb;
-        --accent-soft: rgba(37, 99, 235, 0.06);
-        --glow-accent: rgba(37, 99, 235, 0.08);
-        --chip-bg: rgba(15, 23, 42, 0.04);
-        --card-gradient: radial-gradient(
-          circle at top left,
-          rgba(219, 234, 254, 0.4),
-          var(--bg-soft)
-        );
-        --header-bg: rgba(255, 255, 255, 0.82);
+        /* Light */
+        --bg: #fafafa;
+        --text: #111;
+        --text-muted: #666;
+        --border: #e5e5e5;
+        --accent: #0070f3;
+        --code-bg: #f5f5f5;
+        --code-block-bg: #1a1a1a;
+        --code-block-text: #e5e5e5;
       }
 
       :root[data-theme='dark'] {
-        color-scheme: dark;
-        --bg-page: radial-gradient(
-          ellipse at top left,
-          #0f172a 0%,
-          #060c1a 40%,
-          #020617 100%
-        );
-        --bg-surface: #020617;
-        --bg-elevated: #0f172a;
-        --bg-soft: #0c1425;
-        --text-main: #e2e8f0;
-        --text-muted: #94a3b8;
-        --border-subtle: rgba(148, 163, 184, 0.15);
-        --accent: #60a5fa;
-        --accent-soft: rgba(96, 165, 250, 0.1);
-        --glow-accent: rgba(96, 165, 250, 0.06);
-        --chip-bg: rgba(148, 163, 184, 0.08);
-        --card-gradient: radial-gradient(
-          circle at top left,
-          rgba(96, 165, 250, 0.06),
-          var(--bg-soft)
-        );
-        --header-bg: rgba(2, 6, 23, 0.82);
+        --bg: #111;
+        --text: #ededed;
+        --text-muted: #888;
+        --border: #333;
+        --accent: #79b8ff;
+        --code-bg: #1a1a1a;
+        --code-block-bg: #0a0a0a;
+        --code-block-text: #e5e5e5;
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
         font-family: var(--font-sans);
-        background: var(--bg-page);
-        color: var(--text-main);
-        display: flex;
-        justify-content: center;
-        padding: 3rem 1.5rem;
+        background: var(--bg);
+        color: var(--text);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-      }
-
-      .shell {
-        width: 100%;
-        max-width: 920px;
-        background: var(--bg-surface);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-soft);
-        border: 1px solid var(--border-subtle);
-        overflow: hidden;
-        animation: shellFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
-      }
-
-      @keyframes shellFadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        display: flex;
+        flex-direction: column;
       }
 
       header {
-        padding: 1.1rem 1.75rem;
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .header-inner {
+        max-width: var(--header-width);
+        margin: 0 auto;
+        padding: 1.25rem 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        background: var(--header-bg);
       }
 
       .header-left {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 2rem;
       }
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-      }
-
-      .logo-dot {
-        width: 14px;
-        height: 14px;
-        border-radius: var(--radius-md);
-        background: radial-gradient(circle at 30% 0, #93c5fd, #2563eb);
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
-        transition: box-shadow var(--transition-base), transform var(--transition-base);
-      }
-
-      .home-link:hover .logo-dot {
-        box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.25);
-        transform: scale(1.1);
-      }
-
-      .brand-title {
-        font-size: 0.9rem;
+      .site-name {
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
         font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: var(--text);
+        text-decoration: none;
       }
 
-      .home-link {
+      .site-name:hover {
         text-decoration: none;
-        color: inherit;
+        color: var(--text);
       }
 
       nav {
         display: flex;
-        gap: 0.25rem;
+        gap: 1.5rem;
       }
 
       .nav-link {
-        font-size: 0.82rem;
-        font-weight: 500;
+        font-size: 0.875rem;
         color: var(--text-muted);
         text-decoration: none;
-        padding: 0.3rem 0.65rem;
-        border-radius: 0.5rem;
-        transition: color var(--transition-base), background var(--transition-base);
+        transition: color var(--transition);
       }
 
       .nav-link:hover {
-        color: var(--accent);
-        background: var(--accent-soft);
+        color: var(--text);
         text-decoration: none;
       }
 
       .theme-toggle {
-        border-radius: 999px;
-        border: 1px solid var(--border-subtle);
-        background: var(--chip-bg);
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
         color: var(--text-muted);
-        padding: 0.35rem 0.75rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.78rem;
+        background: none;
+        border: none;
         cursor: pointer;
-        transition: background var(--transition-base), border-color var(--transition-base),
-          color var(--transition-base), transform 150ms ease;
+        padding: 0.25rem 0;
+        transition: color var(--transition);
       }
 
       .theme-toggle:hover {
-        transform: translateY(-1px);
-        border-color: var(--accent);
-        color: var(--accent);
-        background: var(--accent-soft);
-      }
-
-      .theme-toggle:active {
-        transform: translateY(0) scale(0.97);
-      }
-
-      .theme-toggle-icon {
-        font-size: 0.95rem;
-        display: inline-block;
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .theme-toggle-icon.is-rotating {
-        transform: rotate(360deg);
+        color: var(--text);
       }
 
       main {
-        padding: 1.8rem 1.75rem 2.1rem;
-        animation: contentFadeIn 0.4s ease 0.15s both;
-      }
-
-      @keyframes contentFadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        flex: 1;
+        max-width: var(--header-width);
+        width: 100%;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 4rem;
       }
 
       footer {
-        border-top: 1px solid var(--border-subtle);
-        padding: 1.25rem 1.75rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-inner {
+        max-width: var(--header-width);
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 0.78rem;
+        font-size: 0.8125rem;
         color: var(--text-muted);
       }
 
@@ -253,102 +159,62 @@ const currentYear = new Date().getFullYear();
 
       .footer-nav {
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
       }
 
       .footer-nav a {
         color: var(--text-muted);
         text-decoration: none;
-        transition: color var(--transition-base);
+        transition: color var(--transition);
       }
 
       .footer-nav a:hover {
-        color: var(--accent);
+        color: var(--text);
       }
 
-      @media (min-width: 768px) {
-        header {
-          padding: 1.25rem 2rem;
-        }
-
-        main {
-          padding: 2.1rem 2.25rem 2.4rem;
-        }
-
-        footer {
-          padding: 1.25rem 2rem;
-        }
-      }
-
-      @media (max-width: 520px) {
-        .brand-title {
-          display: none;
-        }
-
-        .header-left {
-          gap: 0.75rem;
-        }
-      }
-
+      /* Global link reset — structural links inherit color, no underline */
       a {
-        color: var(--accent);
+        color: inherit;
         text-decoration: none;
-        transition: color var(--transition-base);
-      }
-
-      a:hover {
-        text-decoration: underline;
-        text-underline-offset: 0.16em;
-        text-decoration-thickness: 1px;
+        transition: color var(--transition);
       }
     </style>
 
     <script>
       (function () {
-        const storageKey = 'markdown-blog-theme';
+        const KEY = 'markdown-blog-theme';
         const root = document.documentElement;
 
         const getPreferred = () => {
-          if (typeof window === 'undefined') return 'light';
-          const stored = window.localStorage.getItem(storageKey);
+          const stored = localStorage.getItem(KEY);
           if (stored === 'light' || stored === 'dark') return stored;
-          return window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
+          return matchMedia('(prefers-color-scheme: dark)').matches
             ? 'dark'
             : 'light';
         };
 
-        const applyTheme = (theme) => {
-          root.dataset.theme = theme;
+        const apply = (t) => {
+          root.dataset.theme = t;
         };
 
-        applyTheme(getPreferred());
+        apply(getPreferred());
 
-        const updateIcon = () => {
-          const icon = document.querySelector('[data-theme-icon]');
-          if (!icon) return;
-          icon.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
+        const updateLabel = () => {
+          const el = document.querySelector('[data-theme-label]');
+          if (el) el.textContent = root.dataset.theme === 'dark' ? 'Light' : 'Dark';
         };
 
-        // Handle both initial load and View Transitions navigation
         const setup = () => {
-          applyTheme(getPreferred());
-          updateIcon();
-
+          apply(getPreferred());
+          updateLabel();
           const btn = document.querySelector('[data-theme-toggle]');
           if (!btn || btn.dataset.bound) return;
           btn.dataset.bound = 'true';
-
           btn.addEventListener('click', () => {
-            const icon = btn.querySelector('[data-theme-icon]');
-            if (icon) {
-              icon.classList.add('is-rotating');
-              setTimeout(() => icon.classList.remove('is-rotating'), 500);
-            }
             const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-            applyTheme(next);
-            window.localStorage.setItem(storageKey, next);
-            updateIcon();
+            apply(next);
+            localStorage.setItem(KEY, next);
+            updateLabel();
           });
         };
 
@@ -362,40 +228,39 @@ const currentYear = new Date().getFullYear();
     </script>
   </head>
   <body>
-    <div class="shell">
-      <header>
+    <header>
+      <div class="header-inner">
         <div class="header-left">
-          <a href="/markdown-blog/" class="home-link">
-            <div class="brand">
-              <div class="logo-dot" />
-              <div class="brand-title">{siteConfig.name}</div>
-            </div>
-          </a>
+          <a href="/markdown-blog/" class="site-name">{siteConfig.name}</a>
           <nav>
             <a href="/markdown-blog/" class="nav-link">{siteConfig.nav.blogLabel}</a>
             <a href="/markdown-blog/about/" class="nav-link">{siteConfig.nav.aboutLabel}</a>
           </nav>
         </div>
-        <button
-          class="theme-toggle"
-          type="button"
-          data-theme-toggle
-          aria-label="Toggle light and dark theme"
-        >
-          <span class="theme-toggle-icon" data-theme-icon>☾</span>
-          <span>Theme</span>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+          <span data-theme-label>Dark</span>
         </button>
-      </header>
-      <main>
-        <slot />
-      </main>
-      <footer>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <div class="footer-inner">
         <p class="footer-copy">&copy; {currentYear} {siteConfig.footer.copyright}</p>
         <div class="footer-nav">
           <a href="/markdown-blog/">{siteConfig.nav.blogLabel}</a>
           <a href="/markdown-blog/about/">{siteConfig.nav.aboutLabel}</a>
+          {Object.entries(siteConfig.social)
+            .filter(([, url]) => url)
+            .map(([name, url]) => (
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {name.charAt(0).toUpperCase() + name.slice(1)}
+              </a>
+            ))
+          }
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   </body>
 </html>

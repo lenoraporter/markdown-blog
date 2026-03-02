@@ -7,15 +7,26 @@
  */
 
 export const siteConfig = {
-  /** Displayed in the header and hero section */
+  /** Displayed in the header */
   name: "Markdown Blog",
 
   /** Browser tab title on the homepage */
   title: "My Markdown Blog",
 
-  /** Tagline shown below the hero title on the homepage */
+  /** Personal intro shown as the hero heading on the homepage */
+  heroTitle: "I'm Lenora — a software engineer and writer.",
+
+  /** Short bio shown below the hero title. A link to the about page is added automatically. */
   tagline:
-    "A simple blog where every post is just a Markdown file committed to GitHub. No CMS, no database \u2014 just words.",
+    "I build things for the web and write about code, design, and creative tools. I also love exploring new frameworks and sharing what I learn.",
+
+  /**
+   * Hero image shown at the top of the homepage.
+   * Place your image in the public/ folder and reference it here.
+   * Set to "" to hide the image. Accepts any path relative to public/.
+   * Examples: "/avatar.jpg", "/logo.png"
+   */
+  heroImage: "/avatar.svg",
 
   author: {
     /** Full name — used as the default post author, in meta chips, and the footer */
@@ -27,6 +38,16 @@ export const siteConfig = {
     blogLabel: "Blog",
     /** Label for the about link in the header and footer */
     aboutLabel: "About",
+  },
+
+  /**
+   * Social links shown in the footer.
+   * Set any to "" to hide it. Add or remove entries as needed.
+   */
+  social: {
+    github: "https://github.com/lenoraporter",
+    linkedin: "https://linkedin.com/in/lenoraporter",
+    twitter: "",
   },
 
   footer: {
