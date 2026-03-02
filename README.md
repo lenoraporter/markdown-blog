@@ -165,11 +165,14 @@ Light and dark mode with a toggle in the header. Respects the visitor's system p
 
 ## Deploy to GitHub Pages
 
-1. Push your repo to GitHub
-2. Go to **Settings > Pages** and set **Source** to **GitHub Actions**
-3. On every push to `main`, the workflow builds and deploys
+1. Push your fork to GitHub
+2. Go to **Settings > Pages**
+3. Under **Source**, select **GitHub Actions** (not "Deploy from a branch")
+4. Push to `main` — the included workflow builds and deploys automatically
 
 Your site will be live at `https://<your-username>.github.io/<your-repo>/`.
+
+> **Getting Jekyll errors?** If you see errors about `jekyll-relative-links` or `jekyll-coffeescript`, your Pages source is set to "Deploy from a branch" instead of "GitHub Actions." Go to **Settings > Pages > Source** and switch it.
 
 To build locally:
 
